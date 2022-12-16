@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  app:
+    container_name: frontgazin
+    image: node-frontgazin
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/app
