@@ -9,7 +9,6 @@ export default createGlobalStyle`
   }
   html, body, #root {
     font-family: 'Poppins', sans-serif;
-    color-scheme: light dark;
     color: #ecf0f1;
     background-color: #242424;
     font-synthesis: none;
@@ -31,5 +30,20 @@ export default createGlobalStyle`
   }
   button {
     cursor: pointer;
+  }
+  tbody > tr:hover {
+    cursor: pointer;
+    filter: brightness(1.15);
+  }
+
+  /* DEFAULT STYLES MATERIAL UI*/
+  .MuiTableCell-root {
+    color: #fff !important;
+    background: #313131;
+    border-bottom: 1px solid #444444 !important;
+  }
+  .MuiTableCell-head {
+    font-weight: 600 !important;
+    background-color: #414141;
   }
 `;

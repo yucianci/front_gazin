@@ -1,12 +1,14 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Home } from '../pages/Home';
+import { Developer } from '../pages/Developer';
+import { Level } from '../pages/Level';
 import { NotFound } from '../pages/NotFound';
 
 export default function Switch() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Developer />} />
+      <Route path="/level" element={<Level />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
