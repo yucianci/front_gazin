@@ -20,4 +20,19 @@ export const Main = styled.header`
       color: #fff;
     }
   }
+
+  div a {
+    font-size: 1.1rem;
+    font-weight: 300;
+    transition: all 0.3s;
+    opacity: 0.4;
+
+    :last-child {
+      margin: 0 32px;
+    }
+
+    :hover {
+      opacity: 1;
+    }
+  }
 `;
