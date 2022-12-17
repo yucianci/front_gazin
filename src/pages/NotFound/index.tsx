@@ -1,9 +1,8 @@
 import React from 'react';
+import { Main } from './styles';
 
 export const NotFound = () => (
-  <div>
-    <section>
-      <h3>Página não encontrada!</h3>
-    </section>
-  </div>
+  <Main>
+    <h3>Página não encontrada.</h3>
+  </Main>
 );
