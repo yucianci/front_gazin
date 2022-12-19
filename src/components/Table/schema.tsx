@@ -1,3 +1,5 @@
+import { LevelFilterProps } from '../../pages/Level/schema';
+
 /* eslint-disable no-undef */
 export type CellTableHeadProps = {
   id: string;
@@ -6,6 +8,11 @@ export type CellTableHeadProps = {
 };
 
 export type MuiTableProps = {
-  cellsTableHead: Array<CellTableHeadProps>
-  cellsTableBody: JSX.Element[]
+  cellsTableHead: Array<CellTableHeadProps>;
+  cellsTableBody: JSX.Element[];
+  filters: LevelFilterProps;
+  setFilters: React.Dispatch<React.SetStateAction<LevelFilterProps>>;
+  totalPages: number,
+  defaultPage: number,
+  onChangePage: any,
 }

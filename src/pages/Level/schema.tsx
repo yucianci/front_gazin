@@ -1,33 +1,41 @@
 import { CellTableHeadProps } from '../../components/Table/schema';
 
-export type TableLevelProps = {
+export type LevelProps = {
+  _id: string;
   name: string;
-  createdAt: string;
+  created_at: string;
 };
 
-export const cellsTableHead: Array<CellTableHeadProps> = [
+export type ArrayOfLevelsProps = LevelProps[];
+
+export const cellsTableHead: CellTableHeadProps[] = [
   {
     id: 'name',
     title: 'Nome',
   },
   {
-    id: 'createdAt',
+    id: 'created_at',
     title: 'Data de criação',
     align: 'center',
   },
 ];
 
-export const levels: Array<TableLevelProps> = [
-  {
-    name: 'Júnior',
-    createdAt: '17/12/2022',
-  },
-  {
-    name: 'Pleno',
-    createdAt: '17/12/2022',
-  },
-  {
-    name: 'Sênior',
-    createdAt: '17/12/2022',
-  },
-];
+export type LevelFilterProps = {
+  sort: 'asc' | 'desc';
+  sortBy: 'name' | 'created_at';
+}
+
+export const levelFilters:LevelFilterProps = {
+  sort: 'asc',
+  sortBy: 'name',
+};
+
+export type LevelPagesProps = {
+  page: number;
+  lastPage: number;
+}
+
+export const levelPages:LevelPagesProps = {
+  page: 1,
+  lastPage: 1,
+};

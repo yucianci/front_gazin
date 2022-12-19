@@ -1,4 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
+import { createTheme } from '@mui/material/styles';
+import { ptBR } from '@mui/material/locale';
+
+export const theme = createTheme(ptBR);
 
 export default createGlobalStyle`
   * {
@@ -9,7 +13,7 @@ export default createGlobalStyle`
   }
   html, body, #root {
     font-family: 'Poppins', sans-serif;
-    color: #ecf0f1;
+    color: #dbdbdb;
     background-color: #242424;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -32,18 +36,36 @@ export default createGlobalStyle`
     cursor: pointer;
   }
   tbody > tr:hover {
-    cursor: pointer;
-    filter: brightness(1.15);
+    filter: contrast(1.1);
   }
 
   /* DEFAULT STYLES MATERIAL UI*/
   .MuiTableCell-root {
-    color: #fff !important;
+    color: #dbdbdb !important;
     background: #313131;
     border-bottom: 1px solid #444444 !important;
   }
   .MuiTableCell-head {
     font-weight: 600 !important;
-    background-color: #414141;
+    background-color: #383838;
+    svg {
+      font-size: 1.4rem;
+      transform: translate(5px, 6px);
+    }
+    :hover {
+      cursor: pointer; 
+    }
+  }
+  .MuiPaginationItem-root {
+    color: #dbdbdb !important;
+  }
+  .MuiPaper-root {
+    background: #242424 !important;
+  }
+  .MuiInputBase-root {
+    color: #dbdbdb !important;
+  }
+  .MuiOutlinedInput-notchedOutline {
+    border-color: #383838 !important;
   }
 `;
