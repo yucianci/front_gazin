@@ -17,7 +17,7 @@ export const Main = styled.header`
     font-weight: 600;
 
     :visited {
-      color: #fff;
+      color: #dbdbdb;
     }
   }
 
@@ -26,6 +26,10 @@ export const Main = styled.header`
     font-weight: 300;
     transition: all 0.3s;
     opacity: 0.4;
+
+    :visited {
+      color: #dbdbdb;
+    }
 
     :last-child {
       margin: 0 32px;
