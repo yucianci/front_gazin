@@ -55,11 +55,11 @@ export const Table = ({
                 >
                   {cellTableHead?.title}
 
-                  {cellTableHead.title && sortBy !== cellTableHead.id ? (
+                  {cellTableHead.ordered && sortBy !== cellTableHead.id ? (
                     <UnfoldMore style={{ opacity: '0.4' }} />
-                  ) : cellTableHead.title && sort === 'asc' ? (
+                  ) : cellTableHead.ordered && sort === 'asc' ? (
                     <KeyboardArrowDown />
-                  ) : !!cellTableHead.title && (
+                  ) : !!cellTableHead.ordered && (
                     <KeyboardArrowUp />
                   )}
                 </TableCell>

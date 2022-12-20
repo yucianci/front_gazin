@@ -5,6 +5,7 @@ export type CellTableHeadProps = {
   id: string;
   title: string;
   align?: 'left' | 'center' | 'right';
+  ordered?: boolean;
 };
 
 export type MuiTableProps = {
