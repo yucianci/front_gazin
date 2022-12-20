@@ -3,8 +3,11 @@ import { Delete, MoreHoriz } from '@mui/icons-material';
 import { TableCell, TableRow } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 import { api } from '../../api';
 import Button from '../../components/Button';
+import { Loading } from '../../components/Loading';
 import { Navbar } from '../../components/Navbar';
 import { Table } from '../../components/Table';
 import TextField from '../../components/TextField';
@@ -13,27 +16,15 @@ import Modal from './Modal';
 import {
   ArrayOfLevelsProps,
   cellsTableHead,
+  DataModalLevelProps,
   LevelFilterProps,
   levelFilters,
   levelPages,
   LevelPagesProps,
   LevelProps,
+  modalLevelDefaultValues,
 } from './schema';
 import { ActionButton, Search } from './styles';
-
-interface ModalLevelProps {
-  id: string;
-  name: string;
-  created_at: string;
-  action?: 'include' | 'edit';
-}
-
-export const modalLevelDefaultValues = {
-  id: '',
-  name: '',
-  created_at: '',
-  action: 'include',
-};
 
 export const Level = () => {
   const methods = useForm({ defaultValues: { search: '' } });
@@ -42,37 +33,67 @@ export const Level = () => {
   const [search, setSearch] = useState<string>('');
   const [pages, setPages] = useState<LevelPagesProps>(levelPages);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-  const [modalData, setModalData] = useState<any>({} as ModalLevelProps);
+  const [modalData, setModalData] = useState<any>({} as DataModalLevelProps);
   const [refresh, setRefresh] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { sort, sortBy } = filters;
   const { page } = pages;
 
   useEffect(() => {
+    setLoading(true);
     api
       .get(
-        `levels?sort=${sort}&sortBy${sortBy}&page=${page}&limit=10&search=${search}`,
+        `levels?sort=${sort}&sortBy${sortBy}&page=${page}&limit=6&search=${search}`,
       )
       .then((response) => {
         setPages({ ...pages, lastPage: response.data.lastPage });
         setLevels(response?.data.levels);
-      });
+      })
+      .catch(() => toast.error('Não foi possível consultar os níveis'))
+      .finally(() => setLoading(false));
   }, [refresh, pages.page, filters, search]);
 
+  const handleInclude = () => {
+    setModalData(modalLevelDefaultValues);
+    setModalIsOpen(true);
+  };
+
   const handleDelete = (levelId?: string) => {
-    api.delete(`levels/${levelId}`).then(() => setRefresh((bollean) => !bollean)).catch((err) => console.log(err));
+    Swal.fire({
+      title: 'Realmente deseja excluir o nível?',
+      width: 600,
+      padding: '3em',
+      color: '#bdbdbd',
+      background: '#313131',
+      reverseButtons: true,
+      showCancelButton: true,
+      confirmButtonText: 'Sim, excluir!',
+      cancelButtonText: 'Não, cancelar!',
+    }).then(async (result) => {
+      if (result.value) {
+        setLoading(true);
+        await api
+          .delete(`levels/${levelId}`)
+          .then(() => {
+            setRefresh((bollean) => !bollean);
+            toast.success('Nível excluído com sucesso!');
+          })
+          .catch(() => {
+            toast.error('Ocorreu um erro ao excluir o nível!');
+          })
+          .finally(() => setLoading(false));
+      }
+    });
   };
 
   const cellsTableBody = useMemo(
     () => levels.map((level: LevelProps) => (
-      <TableRow
-        key={level._id}
-
-      >
+      <TableRow key={level._id}>
         <TableCell>{level.name}</TableCell>
         <TableCell align="center">{formatDate(level?.created_at)}</TableCell>
+        <TableCell align="center">0</TableCell>
         <TableCell align="right" style={{ width: '150px' }}>
-
           <ActionButton>
             <Button
               type="button"
@@ -96,11 +117,7 @@ export const Level = () => {
               color="error"
               size="small"
               isIconButton
-              onClick={() => {
-                if (confirm('Deseja realmente excluir este nível?')) {
-                  handleDelete(level._id);
-                }
-              }}
+              onClick={() => handleDelete(level._id)}
             >
               <Delete />
             </Button>
@@ -110,11 +127,6 @@ export const Level = () => {
     )),
     [levels],
   );
-
-  const onClickInclude = () => {
-    setModalData(modalLevelDefaultValues);
-    setModalIsOpen(true);
-  };
 
   return (
     <>
@@ -128,7 +140,7 @@ export const Level = () => {
         />
       </Search>
 
-      <Navbar title="Níveis" onClickInclude={onClickInclude} />
+      <Navbar title="Níveis" onClickInclude={handleInclude} />
 
       <Table
         cellsTableHead={cellsTableHead}
@@ -146,7 +158,10 @@ export const Level = () => {
         modalIsOpen={modalIsOpen}
         modalData={modalData}
         refresh={() => setRefresh((value) => !value)}
+        setLoading={setLoading}
       />
+
+      {loading && <Loading />}
     </>
   );
 };

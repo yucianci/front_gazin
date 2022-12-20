@@ -1,6 +1,7 @@
 import { Grid } from '@mui/material';
 import React, { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { api } from '../../../api';
 import { Modal } from '../../../components/Modal';
 import TextField from '../../../components/TextField';
@@ -11,6 +12,9 @@ const ModalLevel = ({
 }: any) => {
   const methods = useForm<LevelProps>();
   const { handleSubmit, reset, watch } = methods;
+  useEffect(() => {
+    reset(modalData);
+  }, [modalData, reset]);
 
   const validateFields = () => {
     let result;
@@ -18,39 +22,46 @@ const ModalLevel = ({
     if (watch('name').length > 0) {
       result = true;
     } else {
-      alert('Campo nome é obrigatório!');
+      toast.error('Campo nome é obrigatório!');
     }
 
     return result;
   };
-
-  useEffect(() => {
-    reset(modalData);
-  }, [modalData, reset]);
 
   const onSubmit = useCallback(
     async (dataSubmit: any) => {
       if (validateFields()) {
         const date = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
         const level = { name: dataSubmit.name, created_at: date };
+
         try {
           switch (dataSubmit.action) {
             case 'include':
               await api.post(`/${id}`, level);
+              toast.success('Nível criado com sucesso!');
               break;
             case 'edit':
               await api.patch(`/${id}/${dataSubmit._id}`, level);
+              toast.success('Nível editado com sucesso!');
               break;
             default:
               break;
           }
-          if (refresh) {
-            refresh();
+        } catch (error) {
+          switch (dataSubmit.action) {
+            case 'include':
+              toast.error('Não foi possível criar o nível');
+              break;
+            case 'edit':
+              toast.error('Não foi possível editar o nível');
+              break;
+            default:
+              break;
           }
-          onCloseModal();
-        } catch (err) {
-          console.log(err);
         }
+
+        refresh();
+        onCloseModal();
       }
     },
     [],
@@ -73,7 +84,7 @@ const ModalLevel = ({
               name="name"
               placeholder="Nome"
               methods={methods}
-              autoFocus={modalData.action === 'include'}
+              defaultValue={modalData.action !== 'include'}
               required
             />
           </Grid>
