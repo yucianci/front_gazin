@@ -19,6 +19,10 @@ export const Main = styled.header`
     :visited {
       color: #dbdbdb;
     }
+
+    @media (max-width: 800px) {
+      font-size: 1rem;
+    }
   }
 
   div a {
@@ -37,6 +41,10 @@ export const Main = styled.header`
 
     :hover {
       opacity: 1;
+    }
+
+    @media (max-width: 800px) {
+    font-size: .8rem;
     }
   }
 `;
