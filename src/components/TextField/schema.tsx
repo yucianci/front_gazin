@@ -12,4 +12,5 @@ export type TextFieldProps = {
   search?: boolean;
   placeholder?: string;
   onClickButton?: any;
+  defaultValue?: boolean;
 }

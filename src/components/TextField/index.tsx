@@ -18,6 +18,7 @@ export default function TextField({
   search,
   placeholder,
   onClickButton,
+  defaultValue,
 }: TextFieldProps) {
   return (
     <Controller
@@ -25,7 +26,7 @@ export default function TextField({
       name={name}
       render={({ field: { onChange } }) => (
         <Input
-          defaultValue={methods.getValues(name)}
+          defaultValue={defaultValue ? methods.getValues(name) : ''}
           name={name}
           label={label}
           variant="outlined"
