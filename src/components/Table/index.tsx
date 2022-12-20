@@ -21,11 +21,11 @@ export const Table = ({
   cellsTableBody,
   filters,
   setFilters,
-  totalPages,
-  defaultPage,
+  pages,
   onChangePage,
 }: MuiTableProps) => {
   const { sort, sortBy } = filters;
+  const { page, lastPage } = pages;
 
   const handleSortByAscOrDesc = () => {
     if (sort === 'asc') {
@@ -44,20 +44,22 @@ export const Table = ({
                   key={cellTableHead.id}
                   align={cellTableHead.align}
                   onClick={() => {
-                    setFilters({
-                      ...filters,
-                      sortBy: cellTableHead.id,
-                      sort: handleSortByAscOrDesc(),
-                    });
+                    if (cellTableHead.title) {
+                      setFilters({
+                        ...filters,
+                        sortBy: cellTableHead.id,
+                        sort: handleSortByAscOrDesc(),
+                      });
+                    }
                   }}
                 >
-                  {cellTableHead.title}
+                  {cellTableHead?.title}
 
-                  {sortBy !== cellTableHead.id ? (
+                  {cellTableHead.title && sortBy !== cellTableHead.id ? (
                     <UnfoldMore style={{ opacity: '0.4' }} />
-                  ) : sort === 'asc' ? (
+                  ) : cellTableHead.title && sort === 'asc' ? (
                     <KeyboardArrowDown />
-                  ) : (
+                  ) : !!cellTableHead.title && (
                     <KeyboardArrowUp />
                   )}
                 </TableCell>
@@ -74,8 +76,8 @@ export const Table = ({
             justifyContent: 'flex-end',
             padding: '12px 16px',
           }}
-          count={totalPages}
-          page={defaultPage}
+          count={lastPage}
+          page={page}
           onChange={(event, value: any) => onChangePage(value)}
           showFirstButton
           showLastButton

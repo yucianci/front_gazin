@@ -1,4 +1,4 @@
-import { LevelFilterProps } from '../../pages/Level/schema';
+import { LevelFilterProps, LevelPagesProps } from '../../pages/Level/schema';
 
 /* eslint-disable no-undef */
 export type CellTableHeadProps = {
@@ -12,7 +12,6 @@ export type MuiTableProps = {
   cellsTableBody: JSX.Element[];
   filters: LevelFilterProps;
   setFilters: React.Dispatch<React.SetStateAction<LevelFilterProps>>;
-  totalPages: number,
-  defaultPage: number,
-  onChangePage: any,
-}
+  pages: LevelPagesProps
+  onChangePage: any;
+};
