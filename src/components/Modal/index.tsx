@@ -1,36 +1,61 @@
 import { Close } from '@mui/icons-material';
 import { Dialog } from '@mui/material';
 import React from 'react';
+import { FormProvider } from 'react-hook-form';
 import Button from '../Button';
-import { ModalHeader, Wrapper } from './styles';
+import {
+  ModalBody, ModalFooter, ModalHeader, Wrapper,
+} from './styles';
 
-interface IModal {
-  modalIsOpen: boolean;
-  setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+export type ModalProps = {
+  id: string;
+  onCloseModal: any;
+  modalIsOpen: any;
   children: React.ReactNode;
   title: string;
+  methods: any,
+  handleSubmit: any,
+  action: 'include' | 'edit'
 }
 
 export const Modal = ({
+  id,
   modalIsOpen,
-  setModalIsOpen,
+  onCloseModal,
   children,
   title,
-}: IModal) => (
-  <Dialog
-    open={modalIsOpen}
-    onClose={() => setModalIsOpen(false)}
-    fullWidth
-    maxWidth="md"
-  >
-    <Wrapper style={{ color: '#ecf0f1' }}>
-      <ModalHeader>
-        <h1>{title}</h1>
-        <Button isIconButton onClick={() => setModalIsOpen(false)}>
-          <Close style={{ color: '#ecf0f1' }} />
-        </Button>
-      </ModalHeader>
-      {children}
-    </Wrapper>
-  </Dialog>
-);
+  methods,
+  handleSubmit,
+  action,
+}: ModalProps) => {
+  const titleModal = action === 'include' ? `Registrar ${title}` : `Editar ${title}`;
+  return (
+    <Dialog
+      id={id}
+      open={modalIsOpen}
+      onClose={onCloseModal}
+      fullWidth
+      maxWidth="md"
+    >
+      <Wrapper style={{ color: '#ecf0f1' }}>
+        <ModalHeader>
+          <h1>{titleModal}</h1>
+          <Button isIconButton onClick={onCloseModal}>
+            <Close style={{ color: '#ecf0f1' }} />
+          </Button>
+        </ModalHeader>
+        <FormProvider {...methods}>
+          <ModalBody>
+            {children}
+          </ModalBody>
+          <ModalFooter>
+            <form onSubmit={handleSubmit}>
+              <Button type="submit" variant="outlined" color="success">Gravar</Button>
+
+            </form>
+          </ModalFooter>
+        </FormProvider>
+      </Wrapper>
+    </Dialog>
+  );
+};

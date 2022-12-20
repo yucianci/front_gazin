@@ -1,3 +1,4 @@
+import { DialogActions, DialogContent } from '@mui/material';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -24,4 +25,13 @@ export const ModalHeader = styled.div`
     font-weight: 500;
     font-size: 1.2rem;
   }
+`;
+
+export const ModalBody = styled(DialogContent)`
+  padding: 16px 0;
+  margin: 24px 0;
+`;
+
+export const ModalFooter = styled(DialogActions)`
+  margin: 16px;
 `;
