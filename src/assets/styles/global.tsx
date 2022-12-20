@@ -68,4 +68,24 @@ export default createGlobalStyle`
   .MuiOutlinedInput-notchedOutline {
     border-color: #383838 !important;
   }
+  .swal2-actions {
+    display: flex;
+    width: 100%;
+    margin: 50px 0 0;
+    justify-content: space-evenly;
+
+    .swal2-cancel {
+      background: transparent;
+      border: 1px solid #bdbdbd;
+    }
+
+    .swal2-confirm {
+      background: #226e3565;
+      border: 1px solid #226e35;
+
+      :focus {
+        box-shadow: 0 0 0 3px #226e35
+      }
+    }
+  }
 `;
