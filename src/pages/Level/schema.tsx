@@ -1,7 +1,7 @@
 import { CellTableHeadProps } from '../../components/Table/schema';
 
 export type LevelProps = {
-  _id: string;
+  _id?: string;
   name: string;
   created_at: string;
 };
@@ -17,6 +17,11 @@ export const cellsTableHead: CellTableHeadProps[] = [
     id: 'created_at',
     title: 'Data de criação',
     align: 'center',
+  },
+  {
+    id: 'action',
+    title: '',
+    align: 'right',
   },
 ];
 
