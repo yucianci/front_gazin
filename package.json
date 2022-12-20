@@ -20,7 +20,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.41.0",
     "react-router-dom": "^6.5.0",
-    "styled-components": "^5.3.6",
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {
     "@types/node": "^18.11.17",

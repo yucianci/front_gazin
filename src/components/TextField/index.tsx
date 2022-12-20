@@ -25,6 +25,7 @@ export default function TextField({
       name={name}
       render={({ field: { onChange } }) => (
         <Input
+          defaultValue={methods.getValues(name)}
           name={name}
           label={label}
           variant="outlined"
@@ -43,7 +44,7 @@ export default function TextField({
           autoFocus={autoFocus}
           multiline={multiline}
           rows={multiline ? 5 : 0}
-          style={{ color: 'white', width: '100%' }}
+          style={{ width: '100%' }}
           onChange={(item) => onChange(item)}
           InputProps={
             search
