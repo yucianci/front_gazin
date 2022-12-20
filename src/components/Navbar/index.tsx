@@ -4,17 +4,13 @@ import { Main } from './styles';
 
 interface NavbarProps {
   title: string;
-  setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onClickInclude: any;
 }
 
-export const Navbar = ({ title, setModalIsOpen }: NavbarProps) => (
+export const Navbar = ({ title, onClickInclude }: NavbarProps) => (
   <Main>
     <h3>{`Listagem de ${title}`}</h3>
-    <Button
-      type="button"
-      variant="outlined"
-      onClick={() => setModalIsOpen(true)}
-    >
+    <Button type="button" variant="outlined" onClick={onClickInclude}>
       Incluir
     </Button>
   </Main>

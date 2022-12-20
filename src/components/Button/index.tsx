@@ -8,20 +8,45 @@ interface IButton {
   isIconButton?: boolean;
   children?: React.ReactNode;
   type?: 'button' | 'submit' | 'reset';
-  color?: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning' | undefined
+  color?:
+    | 'inherit'
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'error'
+    | 'info'
+    | 'warning'
+    | undefined;
+  size?: 'large' | 'medium' | 'small';
 }
 
 const Button = ({
-  variant, onClick, isIconButton, children, type, color,
+  variant,
+  onClick,
+  isIconButton,
+  children,
+  type,
+  color,
+  size,
 }: IButton) => (
   <>
     {!isIconButton ? (
-      <MuiButton variant={variant} type={type} color={color} onClick={onClick || undefined}>
+      <MuiButton
+        variant={variant}
+        type={type}
+        color={color}
+        onClick={onClick || undefined}
+        size={size}
+      >
         {children}
       </MuiButton>
     ) : (
-      <IconButton onClick={onClick || undefined}>
+      <IconButton
+        onClick={onClick || undefined}
+        color={color}
+      >
         {children}
+
       </IconButton>
     )}
   </>
