@@ -1,24 +1,7 @@
 import { IconButton } from '@mui/material';
 import React from 'react';
+import { ButtonProps } from './schema';
 import { MuiButton } from './styles';
-
-interface IButton {
-  variant?: 'outlined' | 'outlined' | 'text';
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  isIconButton?: boolean;
-  children?: React.ReactNode;
-  type?: 'button' | 'submit' | 'reset';
-  color?:
-    | 'inherit'
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'error'
-    | 'info'
-    | 'warning'
-    | undefined;
-  size?: 'large' | 'medium' | 'small';
-}
 
 const Button = ({
   variant,
@@ -28,7 +11,7 @@ const Button = ({
   type,
   color,
   size,
-}: IButton) => (
+}: ButtonProps) => (
   <>
     {!isIconButton ? (
       <MuiButton
@@ -41,12 +24,8 @@ const Button = ({
         {children}
       </MuiButton>
     ) : (
-      <IconButton
-        onClick={onClick || undefined}
-        color={color}
-      >
+      <IconButton onClick={onClick || undefined} color={color}>
         {children}
-
       </IconButton>
     )}
   </>
