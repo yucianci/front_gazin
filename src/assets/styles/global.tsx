@@ -68,6 +68,12 @@ export default createGlobalStyle`
   .MuiOutlinedInput-notchedOutline {
     border-color: #383838 !important;
   }
+  .MuiFormControl-root.MuiTextField-root {
+    width: 100%;
+  }
+  .MuiGrid-root.MuiGrid-item{
+    padding-bottom: 16px;
+  }
   .swal2-actions {
     display: flex;
     width: 100%;

@@ -15,28 +15,26 @@ export default function TextField({
   disabled,
   methods,
   multiline,
+  line,
   search,
   placeholder,
   onClickButton,
-  defaultValue,
 }: TextFieldProps) {
   return (
     <Controller
       control={methods.control}
       name={name}
-      render={({ field: { onChange } }) => (
+      render={({ field: { onChange, value } }) => (
         <Input
-          defaultValue={defaultValue ? methods.getValues(name) : ''}
+          defaultValue={value}
           name={name}
           label={label}
           variant="outlined"
           size="medium"
           type={type}
           onKeyPress={(e) => {
-            if (search) {
-              if (e.key === 'Enter') {
-                onClickButton();
-              }
+            if (search && e.key === 'Enter') {
+              onClickButton();
             }
           }}
           placeholder={placeholder}
@@ -44,8 +42,8 @@ export default function TextField({
           disabled={disabled}
           autoFocus={autoFocus}
           multiline={multiline}
-          rows={multiline ? 5 : 0}
-          style={{ width: '100%' }}
+          rows={line ? 5 : 0}
+          style={search ? { width: '100%' } : undefined}
           onChange={(item) => onChange(item)}
           InputProps={
             search
