@@ -1,4 +1,6 @@
-import { LevelFilterProps, LevelPagesProps } from '../../pages/Level/schema';
+import { pageProps } from '../../data';
+import { DeveloperFilterProps } from '../../pages/Developer/schema';
+import { LevelFilterProps } from '../../pages/Level/schema';
 
 /* eslint-disable no-undef */
 export type CellTableHeadProps = {
@@ -11,8 +13,10 @@ export type CellTableHeadProps = {
 export type MuiTableProps = {
   cellsTableHead: Array<CellTableHeadProps>;
   cellsTableBody: JSX.Element[];
-  filters: LevelFilterProps;
-  setFilters: React.Dispatch<React.SetStateAction<LevelFilterProps>>;
-  pages: LevelPagesProps
+  filters: LevelFilterProps | DeveloperFilterProps;
+  setFilters:
+    | React.Dispatch<React.SetStateAction<LevelFilterProps>>
+    | React.Dispatch<React.SetStateAction<DeveloperFilterProps>>;
+  pages: pageProps;
   onChangePage: any;
 };

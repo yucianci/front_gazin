@@ -1,50 +1,43 @@
 /* eslint-disable no-restricted-globals */
-import { Delete, MoreHoriz } from '@mui/icons-material';
 import { TableCell, TableRow } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import { api } from '../../api';
-import Button from '../../components/Button';
 import { Loading } from '../../components/Loading';
 import { Navbar } from '../../components/Navbar';
 import { Table } from '../../components/Table';
-import TextField from '../../components/TextField';
 import { formatDate } from '../../utils/formatDate';
-import Modal from './Modal';
-import {
+import Modal from './Modal'; import {
   ArrayOfLevelsProps,
   cellsTableHead,
   DataModalLevelProps,
   LevelFilterProps,
-  levelFilters,
-  levelPages,
-  LevelPagesProps,
+  levelDefaultFilters,
   LevelProps,
   modalLevelDefaultValues,
 } from './schema';
-import { ActionButton, Search } from './styles';
+import { defaultPage, pageProps } from '../../data';
+import { TextFieldSearch } from '../../components/TextField/Search';
+import { ActionButtons } from '../../components/Table/ActionButtons';
 
 export const Level = () => {
-  const methods = useForm({ defaultValues: { search: '' } });
+  const methods = useForm({ defaultValues: { search_nível: '' } });
   const [levels, setLevels] = useState<ArrayOfLevelsProps>([]);
-  const [filters, setFilters] = useState<LevelFilterProps>(levelFilters);
+  const [filters, setFilters] = useState<LevelFilterProps>(levelDefaultFilters);
   const [search, setSearch] = useState<string>('');
-  const [pages, setPages] = useState<LevelPagesProps>(levelPages);
+  const [pages, setPages] = useState<pageProps>(defaultPage);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [modalData, setModalData] = useState<any>({} as DataModalLevelProps);
   const [refresh, setRefresh] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const { sort, sortBy } = filters;
-  const { page } = pages;
-
   useEffect(() => {
     setLoading(true);
     api
       .get(
-        `levels?sort=${sort}&sortBy${sortBy}&page=${page}&limit=6&search=${search}`,
+        `levels?sort=${filters.sort}&sortBy${filters.sortBy}&page=${pages.page}&limit=6&search=${search}`,
       )
       .then((response) => {
         setPages({ ...pages, lastPage: response.data.lastPage });
@@ -59,7 +52,7 @@ export const Level = () => {
     setModalIsOpen(true);
   };
 
-  const handleDelete = (levelId?: string) => {
+  const handleDelete = (levelId: string) => {
     Swal.fire({
       title: 'Realmente deseja excluir o nível?',
       width: 600,
@@ -94,34 +87,12 @@ export const Level = () => {
         <TableCell align="center">{formatDate(level?.created_at)}</TableCell>
         <TableCell align="center">0</TableCell>
         <TableCell align="right" style={{ width: '150px' }}>
-          <ActionButton>
-            <Button
-              type="button"
-              variant="outlined"
-              color="info"
-              size="small"
-              isIconButton
-              onClick={() => {
-                setModalData({
-                  ...level,
-                  action: 'edit',
-                });
-                setModalIsOpen(true);
-              }}
-            >
-              <MoreHoriz />
-            </Button>
-            <Button
-              type="button"
-              variant="outlined"
-              color="error"
-              size="small"
-              isIconButton
-              onClick={() => handleDelete(level._id)}
-            >
-              <Delete />
-            </Button>
-          </ActionButton>
+          <ActionButtons
+            data={level}
+            setModalIsOpen={setModalIsOpen}
+            setModalData={setModalData}
+            handleDelete={handleDelete}
+          />
         </TableCell>
       </TableRow>
     )),
@@ -130,15 +101,7 @@ export const Level = () => {
 
   return (
     <>
-      <Search>
-        <TextField
-          name="search"
-          placeholder="Pesquisar nível"
-          methods={methods}
-          search
-          onClickButton={() => setSearch(methods.getValues('search'))}
-        />
-      </Search>
+      <TextFieldSearch name="nível" methods={methods} setSearch={setSearch} />
 
       <Navbar title="Níveis" onClickInclude={handleInclude} />
 

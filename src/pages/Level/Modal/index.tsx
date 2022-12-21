@@ -84,7 +84,6 @@ const ModalLevel = ({
               name="name"
               placeholder="Nome"
               methods={methods}
-              defaultValue={modalData.action !== 'include'}
               required
             />
           </Grid>

@@ -33,22 +33,12 @@ export const cellsTableHead: CellTableHeadProps[] = [
 
 export type LevelFilterProps = {
   sort: 'asc' | 'desc';
-  sortBy: 'name' | 'created_at';
+  sortBy: 'name';
 }
 
-export const levelFilters:LevelFilterProps = {
+export const levelDefaultFilters:LevelFilterProps = {
   sort: 'asc',
   sortBy: 'name',
-};
-
-export type LevelPagesProps = {
-  page: number;
-  lastPage: number;
-}
-
-export const levelPages:LevelPagesProps = {
-  page: 1,
-  lastPage: 1,
 };
 
 export type DataModalLevelProps = {
