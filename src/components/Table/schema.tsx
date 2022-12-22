@@ -2,7 +2,6 @@ import { pageProps } from '../../data';
 import { DeveloperFilterProps } from '../../pages/Developer/schema';
 import { LevelFilterProps } from '../../pages/Level/schema';
 
-/* eslint-disable no-undef */
 export type CellTableHeadProps = {
   id: string;
   title: string;

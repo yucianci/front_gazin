@@ -44,7 +44,7 @@ export const Table = ({
                   key={cellTableHead.id}
                   align={cellTableHead.align}
                   onClick={() => {
-                    if (cellTableHead.title) {
+                    if (cellTableHead.ordered) {
                       setFilters({
                         ...filters,
                         sortBy: cellTableHead.id,
