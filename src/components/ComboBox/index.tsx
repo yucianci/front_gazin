@@ -1,15 +1,16 @@
 import React from 'react';
 import { Controller } from 'react-hook-form';
 import { Autocomplete, TextField } from '@mui/material';
+import { ComboboxProps } from './schema';
 
 export const ComboBox = ({
   name,
   label,
   placeholder,
   options,
-  autoFocus,
   methods,
-}: any) => (
+  required,
+}: ComboboxProps) => (
   <Controller
     control={methods.control}
     name={name}
@@ -31,8 +32,7 @@ export const ComboBox = ({
             variant="outlined"
             placeholder={placeholder}
             size="medium"
-            required
-            autoFocus={autoFocus}
+            required={required}
             onChange={onChange}
           />
         )}
