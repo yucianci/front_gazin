@@ -85,12 +85,10 @@ export default createGlobalStyle`
     width: 100%;
     margin: 50px 0 0;
     justify-content: space-evenly;
-
     .swal2-cancel {
       background: transparent;
       border: 1px solid #bdbdbd;
     }
-
     .swal2-confirm {
       background: #226e3565;
       border: 1px solid #226e35;

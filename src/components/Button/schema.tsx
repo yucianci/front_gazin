@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 export type ButtonProps = {
   variant?: 'outlined' | 'outlined' | 'text';
   onClick?: React.MouseEventHandler<HTMLButtonElement>;

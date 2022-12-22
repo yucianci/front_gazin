@@ -24,6 +24,7 @@
     "react/jsx-no-useless-fragment": "off",
     "no-underscore-dangle": "off",
     "no-nested-ternary": "off",
-    "react/jsx-props-no-spreading": "off"
+    "react/jsx-props-no-spreading": "off",
+    "no-undef": "off"
   }
 }
