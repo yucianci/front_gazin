@@ -74,6 +74,12 @@ export default createGlobalStyle`
   .MuiGrid-root.MuiGrid-item{
     padding-bottom: 16px;
   }
+  .MuiAutocomplete-endAdornment button svg {
+    color: #717171;
+  }
+  .MuiAutocomplete-listbox li {
+    color: #717171 !important;
+  }
   .swal2-actions {
     display: flex;
     width: 100%;
