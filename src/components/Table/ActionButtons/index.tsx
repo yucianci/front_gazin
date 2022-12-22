@@ -1,10 +1,11 @@
 import { Delete, Search } from '@mui/icons-material';
 import React from 'react';
+import { toast } from 'react-toastify';
 import Button from '../../Button';
 import { ActionButton } from './styles';
 
 export const ActionButtons = ({
-  setModalIsOpen, setModalData, handleDelete, data,
+  setModalIsOpen, setModalData, handleDelete, data, isAvailableToDelete,
 }: any) => (
   <ActionButton>
     <Button
@@ -29,7 +30,7 @@ export const ActionButtons = ({
       color="error"
       size="small"
       isIconButton
-      onClick={() => handleDelete(data._id || '')}
+      onClick={() => (!isAvailableToDelete ? handleDelete(data._id || '') : toast.error('Esse nível não pode ser excluído, primeiro exclua os desenvolvedores atrelados a ele!'))}
     >
       <Delete />
     </Button>

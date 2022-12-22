@@ -4,7 +4,7 @@ export type DeveloperProps = {
   _id?: string;
   name: string;
   level: { id: string; name: string };
-  sex: string;
+  sex: { id: string; name: string };
   birthday: string;
   age?: number | null;
   hobby?: string;

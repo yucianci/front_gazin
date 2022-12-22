@@ -87,7 +87,7 @@ export const Developer = () => {
       <TableRow key={developer._id}>
         <TableCell>{developer.name}</TableCell>
         <TableCell align="center">{developer.level.name}</TableCell>
-        <TableCell align="center">{developer.sex}</TableCell>
+        <TableCell align="center">{developer.sex.name}</TableCell>
         <TableCell align="center">{developer.birthday}</TableCell>
         <TableCell align="right" style={{ width: '150px' }}>
           <ActionButtons
@@ -117,15 +117,16 @@ export const Developer = () => {
         onChangePage={(pageValue: number) => setPages({ ...pages, page: pageValue })}
       />
 
+      {modalIsOpen && (
       <Modal
         id="developers"
         title="Desenvolvedor"
         onCloseModal={() => setModalIsOpen(false)}
-        modalIsOpen={modalIsOpen}
         modalData={modalData}
         refresh={() => setRefresh((value) => !value)}
         setLoading={setLoading}
       />
+      )}
 
       {loading && <Loading />}
     </>

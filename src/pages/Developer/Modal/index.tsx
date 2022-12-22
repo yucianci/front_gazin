@@ -1,21 +1,32 @@
+/* eslint-disable no-restricted-syntax */
 import { Grid } from '@mui/material';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { api } from '../../../api';
-import ComboBox from '../../../components/ComboBox';
+import { ComboBox } from '../../../components/ComboBox';
 import { Modal } from '../../../components/Modal';
 import TextField from '../../../components/TextField';
 import { DeveloperProps } from '../schema';
 
 const ModalDeveloper = ({
-  id, title, modalData, refresh, modalIsOpen, onCloseModal,
+  id,
+  title,
+  modalData,
+  refresh,
+  onCloseModal,
 }: any) => {
   const methods = useForm<DeveloperProps>();
   const { handleSubmit, reset, watch } = methods;
+  const [levels, setLevels] = useState<any>([]);
+
   useEffect(() => {
     reset(modalData);
   }, [modalData, reset]);
+
+  useEffect(() => {
+    api.get('levels').then((response) => setLevels(response.data.levels));
+  }, []);
 
   const validateFields = () => {
     let result;
@@ -29,41 +40,38 @@ const ModalDeveloper = ({
     return result;
   };
 
-  const onSubmit = useCallback(
-    async (dataSubmit: any) => {
-      if (validateFields()) {
-        try {
-          switch (dataSubmit.action) {
-            case 'include':
-              await api.post(`/${id}`, dataSubmit);
-              toast.success('Desenvolvedor criado com sucesso!');
-              break;
-            case 'edit':
-              await api.patch(`/${id}/${dataSubmit._id}`, dataSubmit);
-              toast.success('Desenvolvedor editado com sucesso!');
-              break;
-            default:
-              break;
-          }
-        } catch (error) {
-          switch (dataSubmit.action) {
-            case 'include':
-              toast.error('Não foi possível criar o desenvolvedor');
-              break;
-            case 'edit':
-              toast.error('Não foi possível editar o desenvolvedor');
-              break;
-            default:
-              break;
-          }
+  const onSubmit = useCallback(async (dataSubmit: any) => {
+    if (validateFields()) {
+      try {
+        switch (dataSubmit.action) {
+          case 'include':
+            await api.post(`/${id}`, dataSubmit);
+            toast.success('Desenvolvedor criado com sucesso!');
+            break;
+          case 'edit':
+            await api.patch(`/${id}/${dataSubmit._id}`, dataSubmit);
+            toast.success('Desenvolvedor editado com sucesso!');
+            break;
+          default:
+            break;
         }
-
-        refresh();
-        onCloseModal();
+      } catch (error) {
+        switch (dataSubmit.action) {
+          case 'include':
+            toast.error('Não foi possível criar o desenvolvedor');
+            break;
+          case 'edit':
+            toast.error('Não foi possível editar o desenvolvedor');
+            break;
+          default:
+            break;
+        }
       }
-    },
-    [],
-  );
+
+      refresh();
+      onCloseModal();
+    }
+  }, []);
 
   return (
     <>
@@ -73,7 +81,7 @@ const ModalDeveloper = ({
         action={modalData.action}
         methods={methods}
         handleSubmit={handleSubmit(onSubmit)}
-        modalIsOpen={modalIsOpen}
+        modalIsOpen
         onCloseModal={onCloseModal}
       >
         <Grid container spacing={2} direction="row">
@@ -98,18 +106,25 @@ const ModalDeveloper = ({
         </Grid>
 
         <Grid container spacing={2} direction="row">
-          <Grid item xs={7} sm={7} md={7}>
-            <TextField
+          <Grid item xs={12} sm={7} md={7}>
+            <ComboBox
               name="level"
-              placeholder="Nível"
+              placeholder="Selecione um nível"
+              options={levels}
               methods={methods}
               required
             />
           </Grid>
-          <Grid item xs={5} sm={5} md={5}>
+          <Grid item xs={12} sm={5} md={5}>
             <ComboBox
-              name="level"
+              name="sex"
+              placeholder="Selecione seu sexo"
+              options={[
+                { id: 'male', name: 'Masculino' },
+                { id: 'female', name: 'Feminino' },
+              ]}
               methods={methods}
+              required
             />
           </Grid>
         </Grid>
@@ -124,7 +139,6 @@ const ModalDeveloper = ({
             />
           </Grid>
         </Grid>
-
       </Modal>
     </>
   );
