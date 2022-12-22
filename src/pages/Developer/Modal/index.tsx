@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import { Grid } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -8,6 +7,7 @@ import { ComboBox } from '../../../components/ComboBox';
 import { Modal } from '../../../components/Modal';
 import TextField from '../../../components/TextField';
 import { DeveloperProps } from '../schema';
+import { ModalDeveloperProps } from './schema';
 
 const ModalDeveloper = ({
   id,
@@ -15,17 +15,23 @@ const ModalDeveloper = ({
   modalData,
   refresh,
   onCloseModal,
-}: any) => {
+  setLoading,
+}: ModalDeveloperProps) => {
   const methods = useForm<DeveloperProps>();
   const { handleSubmit, reset, watch } = methods;
-  const [levels, setLevels] = useState<any>([]);
+  const [levels, setLevels] = useState([]);
 
   useEffect(() => {
     reset(modalData);
   }, [modalData, reset]);
 
   useEffect(() => {
-    api.get('levels').then((response) => setLevels(response.data.levels));
+    setLoading(true);
+    api
+      .get('levels')
+      .then((response) => setLevels(response.data.levels))
+      .catch(() => toast.error('Não foi possível realizar a consulta de níveis!'))
+      .finally(() => setLoading(false));
   }, []);
 
   const validateFields = () => {
@@ -37,11 +43,24 @@ const ModalDeveloper = ({
       toast.error('Campo nome é obrigatório!');
     }
 
+    if (watch('level').name.length > 0) {
+      result = true;
+    } else {
+      toast.error('Campo nível é obrigatório!');
+    }
+
+    if (watch('sex').name.length > 0) {
+      result = true;
+    } else {
+      toast.error('Campo sexo é obrigatório!');
+    }
+
     return result;
   };
 
   const onSubmit = useCallback(async (dataSubmit: any) => {
     if (validateFields()) {
+      setLoading(true);
       try {
         switch (dataSubmit.action) {
           case 'include':
@@ -70,6 +89,7 @@ const ModalDeveloper = ({
 
       refresh();
       onCloseModal();
+      setLoading(false);
     }
   }, []);
 

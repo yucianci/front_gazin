@@ -5,7 +5,6 @@ export type DeveloperProps = {
   name: string;
   level: { id: string; name: string };
   sex: { id: string; name: string };
-  birthday: string;
   age?: number | null;
   hobby?: string;
 };
@@ -29,11 +28,6 @@ export const cellsTableHead: CellTableHeadProps[] = [
     align: 'center',
   },
   {
-    id: 'birthday',
-    title: 'Data de nascimento',
-    align: 'center',
-  },
-  {
     id: 'action',
     title: '',
     align: 'right',
@@ -42,7 +36,7 @@ export const cellsTableHead: CellTableHeadProps[] = [
 
 export type DeveloperFilterProps = {
   sort: 'asc' | 'desc';
-  sortBy: 'name' | 'level' | 'sex' | 'birthday' | 'age';
+  sortBy: 'name';
 };
 
 export const developerDefaultFilter: DeveloperFilterProps = {
@@ -55,18 +49,16 @@ export type DataModalDeveloperProps = {
   name: string;
   level: { id: string; name: string };
   sex: string;
-  birthday: string;
   age?: number | null;
   hobby?: string;
   action?: 'include' | 'edit';
 };
 
-export const modalDeveloperDefaultValues = {
+export const modalDeveloperDefaultValues: DataModalDeveloperProps = {
   id: '',
   name: '',
   level: { id: '', name: '' },
   sex: '',
-  birthday: '',
   age: null,
   hobby: '',
   action: 'include',

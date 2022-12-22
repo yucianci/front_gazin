@@ -31,7 +31,9 @@ export const Developer = () => {
   const [search, setSearch] = useState<string>('');
   const [pages, setPages] = useState<pageProps>(defaultPage);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-  const [modalData, setModalData] = useState<any>({} as DataModalDeveloperProps);
+  const [modalData, setModalData] = useState<DataModalDeveloperProps>(
+    {} as DataModalDeveloperProps,
+  );
   const [refresh, setRefresh] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -88,7 +90,6 @@ export const Developer = () => {
         <TableCell>{developer.name}</TableCell>
         <TableCell align="center">{developer.level.name}</TableCell>
         <TableCell align="center">{developer.sex.name}</TableCell>
-        <TableCell align="center">{developer.birthday}</TableCell>
         <TableCell align="right" style={{ width: '150px' }}>
           <ActionButtons
             data={developer}
@@ -104,10 +105,12 @@ export const Developer = () => {
 
   return (
     <>
-      <TextFieldSearch name="desenvolvedor" methods={methods} setSearch={setSearch} />
-
+      <TextFieldSearch
+        name="desenvolvedor"
+        methods={methods}
+        setSearch={setSearch}
+      />
       <Navbar title="Desenvolvedores" onClickInclude={handleInclude} />
-
       <Table
         cellsTableHead={cellsTableHead}
         cellsTableBody={cellsTableBody}
@@ -116,18 +119,16 @@ export const Developer = () => {
         pages={pages}
         onChangePage={(pageValue: number) => setPages({ ...pages, page: pageValue })}
       />
-
       {modalIsOpen && (
-      <Modal
-        id="developers"
-        title="Desenvolvedor"
-        onCloseModal={() => setModalIsOpen(false)}
-        modalData={modalData}
-        refresh={() => setRefresh((value) => !value)}
-        setLoading={setLoading}
-      />
+        <Modal
+          id="developers"
+          title="Desenvolvedor"
+          onCloseModal={() => setModalIsOpen(false)}
+          modalData={modalData}
+          refresh={() => setRefresh((value) => !value)}
+          setLoading={setLoading}
+        />
       )}
-
       {loading && <Loading />}
     </>
   );
