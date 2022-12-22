@@ -1,11 +1,7 @@
 import React from 'react';
 import Button from '../Button';
+import { NavbarProps } from './schema';
 import { Main } from './styles';
-
-interface NavbarProps {
-  title: string;
-  onClickInclude: any;
-}
 
 export const Navbar = ({ title, onClickInclude }: NavbarProps) => (
   <Main>
