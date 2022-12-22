@@ -6,12 +6,14 @@ import { api } from '../../../api';
 import { Modal } from '../../../components/Modal';
 import TextField from '../../../components/TextField';
 import { LevelProps } from '../schema';
+import { ModalLevelProps } from './schema';
 
 const ModalLevel = ({
-  id, title, modalData, refresh, onCloseModal,
-}: any) => {
+  id, title, modalData, refresh, onCloseModal, setLoading,
+}: ModalLevelProps) => {
   const methods = useForm<LevelProps>();
   const { handleSubmit, reset, watch } = methods;
+
   useEffect(() => {
     reset(modalData);
   }, [modalData, reset]);
@@ -31,6 +33,7 @@ const ModalLevel = ({
   const onSubmit = useCallback(
     async (dataSubmit: any) => {
       if (validateFields()) {
+        setLoading(true);
         const date = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
         const level = { name: dataSubmit.name, created_at: date };
 
@@ -62,6 +65,7 @@ const ModalLevel = ({
 
         refresh();
         onCloseModal();
+        setLoading(false);
       }
     },
     [],
