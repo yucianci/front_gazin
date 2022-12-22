@@ -3,20 +3,10 @@ import { Dialog } from '@mui/material';
 import React from 'react';
 import { FormProvider } from 'react-hook-form';
 import Button from '../Button';
+import { ModalProps } from './schema';
 import {
   ModalBody, ModalFooter, ModalHeader, Wrapper,
 } from './styles';
-
-export type ModalProps = {
-  id: string;
-  onCloseModal: any;
-  modalIsOpen: any;
-  children: React.ReactNode;
-  title: string;
-  methods: any,
-  handleSubmit: any,
-  action: 'include' | 'edit'
-}
 
 export const Modal = ({
   id,
