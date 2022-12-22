@@ -33,7 +33,7 @@ export default function TextField({
           size="medium"
           type={type}
           onKeyPress={(e) => {
-            if (search && e.key === 'Enter') {
+            if (search && e.key === 'Enter' && onClickButton) {
               onClickButton();
             }
           }}

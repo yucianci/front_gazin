@@ -12,5 +12,5 @@ export type TextFieldProps = {
   line?: number;
   search?: boolean;
   placeholder?: string;
-  onClickButton?: any;
+  onClickButton?: () => void;
 }
