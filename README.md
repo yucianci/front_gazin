@@ -1,5 +1,5 @@
 
-# Gazin tech - Challenge Poject:
+# Gazin tech - Frontend Challenge Project:
 
 ![image](https://user-images.githubusercontent.com/63871510/209068109-faeae181-12f3-40d9-ad1c-7e793d4fd43a.png)
 
