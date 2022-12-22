@@ -15,11 +15,9 @@ export const Main = styled.header`
   a {
     font-size: 1.7rem;
     font-weight: 600;
-
     :visited {
       color: #dbdbdb;
     }
-
     @media (max-width: 800px) {
       font-size: 1rem;
     }
@@ -30,19 +28,15 @@ export const Main = styled.header`
     font-weight: 300;
     transition: all 0.3s;
     opacity: 0.4;
-
     :visited {
       color: #dbdbdb;
     }
-
     :last-child {
       margin: 0 32px;
     }
-
     :hover {
       opacity: 1;
     }
-
     @media (max-width: 800px) {
     font-size: .8rem;
     }
