@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-restricted-globals */
 import { TableCell, TableRow } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -9,7 +10,8 @@ import { Loading } from '../../components/Loading';
 import { Navbar } from '../../components/Navbar';
 import { Table } from '../../components/Table';
 import { formatDate } from '../../utils/formatDate';
-import Modal from './Modal'; import {
+import Modal from './Modal';
+import {
   ArrayOfLevelsProps,
   cellsTableHead,
   DataModalLevelProps,
@@ -25,6 +27,7 @@ import { ActionButtons } from '../../components/Table/ActionButtons';
 export const Level = () => {
   const methods = useForm({ defaultValues: { search_nível: '' } });
   const [levels, setLevels] = useState<ArrayOfLevelsProps>([]);
+  const [countLevelInDevelopers, setCountLevelInDevelopers] = useState([]);
   const [filters, setFilters] = useState<LevelFilterProps>(levelDefaultFilters);
   const [search, setSearch] = useState<string>('');
   const [pages, setPages] = useState<pageProps>(defaultPage);
@@ -46,6 +49,27 @@ export const Level = () => {
       .catch(() => toast.error('Não foi possível consultar os níveis'))
       .finally(() => setLoading(false));
   }, [refresh, pages.page, filters, search]);
+
+  useEffect(() => {
+    setLoading(true);
+    api
+      .get('developers')
+      .then((response) => {
+        setCountLevelInDevelopers(response?.data.developers);
+      })
+      .catch(() => toast.error('Não foi possível consultar os desenvolvedores'))
+      .finally(() => setLoading(false));
+  }, [refresh, pages.page]);
+
+  const developersInCurrentLevel = useMemo(
+    () => (levelId: string) => {
+      const count = countLevelInDevelopers.filter(
+        (item: any) => item.level._id === levelId,
+      );
+      return count.length;
+    },
+    [countLevelInDevelopers],
+  );
 
   const handleInclude = () => {
     setModalData(modalLevelDefaultValues);
@@ -85,13 +109,16 @@ export const Level = () => {
       <TableRow key={level._id}>
         <TableCell>{level.name}</TableCell>
         <TableCell align="center">{formatDate(level?.created_at)}</TableCell>
-        <TableCell align="center">0</TableCell>
+        <TableCell align="center">
+          {developersInCurrentLevel(level._id || '')}
+        </TableCell>
         <TableCell align="right" style={{ width: '150px' }}>
           <ActionButtons
             data={level}
             setModalIsOpen={setModalIsOpen}
             setModalData={setModalData}
             handleDelete={handleDelete}
+            isAvailableToDelete={developersInCurrentLevel(level._id || '')}
           />
         </TableCell>
       </TableRow>
@@ -114,15 +141,16 @@ export const Level = () => {
         onChangePage={(pageValue: number) => setPages({ ...pages, page: pageValue })}
       />
 
-      <Modal
-        id="levels"
-        title="Nível"
-        onCloseModal={() => setModalIsOpen(false)}
-        modalIsOpen={modalIsOpen}
-        modalData={modalData}
-        refresh={() => setRefresh((value) => !value)}
-        setLoading={setLoading}
-      />
+      {modalIsOpen && (
+        <Modal
+          id="levels"
+          title="Nível"
+          onCloseModal={() => setModalIsOpen(false)}
+          modalData={modalData}
+          refresh={() => setRefresh((value) => !value)}
+          setLoading={setLoading}
+        />
+      )}
 
       {loading && <Loading />}
     </>

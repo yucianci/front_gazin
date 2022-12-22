@@ -8,7 +8,7 @@ import TextField from '../../../components/TextField';
 import { LevelProps } from '../schema';
 
 const ModalLevel = ({
-  id, title, modalData, refresh, modalIsOpen, onCloseModal,
+  id, title, modalData, refresh, onCloseModal,
 }: any) => {
   const methods = useForm<LevelProps>();
   const { handleSubmit, reset, watch } = methods;
@@ -75,7 +75,7 @@ const ModalLevel = ({
         action={modalData.action}
         methods={methods}
         handleSubmit={handleSubmit(onSubmit)}
-        modalIsOpen={modalIsOpen}
+        modalIsOpen
         onCloseModal={onCloseModal}
       >
         <Grid container spacing={1} direction="row">
